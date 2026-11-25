@@ -1,20 +1,24 @@
 #!/usr/bin/env python3
-"""One-Liner Marathon (make.fun).
+"""One-Liner Marathon — a make.fun one-line entry.
 
-Writes the entry -- one one-line comedy joke --
-to /output/entry.txt, where the sealed scorer reads it.
+The program writes the entry text to /output/entry.txt, where the
+competition's sealed scorer reads it.
 """
 
-import os
+from pathlib import Path
 
-TEXT = 'I told my smart speaker I loved it; it said, "I\'m sorry, I didn\'t quite catch that" — the most honest rejection of my life.'
+ENTRY = "I asked my AI assistant for a joke about procrastination; it said it would tell me tomorrow, then rescheduled itself."
+
+OUTPUT = Path("/output/entry.txt")
 
 
-def main():
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(TEXT)
+def write_entry() -> None:
+    """Write the entry text to the output file."""
+    text = ENTRY.strip()
+    assert text, "entry text must not be blank"
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(text, encoding="utf-8")
 
 
 if __name__ == "__main__":
-    main()
+    write_entry()
